@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Currency Exchannge</title>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            document.querySelector('form').onsubmit = function () {
+
+                fetch('https://api.exchangeratesapi.io/latest?base=USD')
+                    .then(response => response.json())
+                    .then(data => {
+                        const currency = document.querySelector('#currency').value.toUpperCase();
+                        console.log(data);
+
+                        const rate = data.rates[currency];
+                        if (rate !== undefined)
+                        {
+                            document.querySelector('#result').innerHTML = `1 USD is equal ${rate.toFixed(2)} ${currency}`;
+                        } else
+                        {
+                            document.querySelector('#result').innerHTML = 'Invalid Currency.'
+                        }
+
+                        // document.querySelector('body').innerHTML = `1 USD is equal ${rate.toFixed(2)}`;
+                    })
+                    .catch(error => {
+                        console.log("Error", error)
+                    });
+                return false;
+            };
+
+            //     // fetch('https://api.exchangeratesapi.io/latest?base=USD')
+            //     // .then(function(response){
+            //     //     return response.json()
+            //     //     .then(function(data){
+            //     //         console.log(data);
+            //     //         const eurRate = data.rates.EUR;
+            //     //         // document.querySelector('body').innerHTML = `1 USD is equal ${eurRate.toFixed(2)}`;
+            //     //     });
+            //     // });
+
+        });
+    </script>
+</head>
+
+<body>
+    <form>
+        <input type="text" placeholder="Currency" id="currency" />
+        <input type="submit" value="Convert" />
+    </form>
+
+    <div id="result"></div>
+</body>
+
+</html>
