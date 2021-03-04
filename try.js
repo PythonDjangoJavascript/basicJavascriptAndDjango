@@ -1,80 +1,46 @@
-// function showSection(section)
-// {
-//     fetch(`/sections/${section}`)
-//         .then((response) => response.text())
-//         .then((text) =>
-//         {
-//             console.log(text);
-//             document.querySelector("#content").innerHTML = text;
-//         });
-// }
+let counter = 1;
+const quantity = 20;
 
-// document.addEventListener("DOMContentLoaded", function ()
-// {
-//     document.querySelectorAll("button").forEach((button) =>
-//     {
-//         button.onclick = function ()
-//         {
-//             showSection(this.dataset.section);
-//         };
-//     });
-// });
+document.addEventListener('DOMContentLoaded', load);
 
-// window.onpopstate = function (event)
-// {
-//     console.log(event.state.section);
-//     showSection(event.state.section);
-// }
-
-// function showSection(section)
-// {
-//     fetch(`/sections/${section}`)
-//         .then(response => response.text())
-//         .then(text =>
-//         {
-//             console.log(text);
-//             document.querySelector('#content').innerHTML = text;
-//         });
-// }
-
-// document.addEventListener('DOMContentLoaded', function ()
-// {
-//     document.querySelectorAll('button').forEach(button =>
-//     {
-//         button.onclick = function ()
-//         {
-//             const section = this.dataset.section;
-//             history.pushState({ section: section }, "", `section${section}`);
-//             showSection(section);
-//         };
-//     });
-// });
-
-window.onpopstate = function (event)
+window.onscroll = () =>
 {
-    console.log(event.state.section);
-    showSection(event.state.section);
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        load();
+    }
 }
-function showSection(section)
+
+document.addEventListener('click', event =>
 {
-    fetch(`/section/${section}`)
-        .then(response => response.text())
-        .then(text =>
+    const element = event.target;
+    if (element.className === 'hide') {
+        element.parentElement.style.animaitonPlayState = 'running';
+        element.parentElement.addEventListener('animationend', () =>
         {
-            console.log(text);
-            document.querySelector('#content').innerHTML = text;
+            element.parentElement.remove();
         });
-}
-
-document.addEventListener('DOMContentLoaded', function ()
-{
-    document.querySelectorAll('button').forEach(button =>
-    {
-        button.onclick = function ()
-        {
-            const section = this.dataset.section;
-            history.pushState({ section: section }, "", `${section}`);
-            showSection(section);
-        };
-    });
+    }
 });
+
+function load()
+{
+    const start = counter;
+    const end = start + quantity - 1;
+    counter = end + 1;
+
+    fetch(`/posts/posts?start=${start}&end=${end}`)
+        .then(response => response.json())
+        .then(data =>
+        {
+            data.posts.forEach(add_post);
+        })
+};
+
+function add_post(content)
+{
+    const post = document.createElement('div');
+    post.className = 'post';
+    post.innerHTML = `${content} <button class="hide">Hide</button>`
+
+    document.querySelector('#posts').append(post);
+};

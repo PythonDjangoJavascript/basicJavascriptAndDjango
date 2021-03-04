@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Animate</title>
+    <style>
+        /* @keyframes grow {
+            from {
+                fornt-size: 20px;
+            }
+
+            to {
+                font-size: 100px;
+            }
+        }
+
+        h1 {
+            animation-name: grow;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+        } */
+
+        @keyframes move {
+            0% {
+                left: 0%;
+            }
+
+            50% {
+                left: 50%;
+            }
+
+            100% {
+                left: 0%;
+            }
+        }
+
+        h1 {
+            position: relative;
+            animation-name: move;
+            animation-duration: 3s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes hide {
+            0% {
+                opacity: 1;
+                height: 100%;
+                line-height: 100%px;
+                margin-bottom: 10px;
+                padding: 40px;
+            }
+
+            75% {
+                opacity: 0;
+                height: 100%;
+                line-height: 100%px;
+                margin-bottom: 10px;
+                padding: 40px;
+            }
+
+            100% {
+                opacity: 0;
+                height: 0px;
+                line-height: 0px;
+                margin-bottom: 0px;
+                padding: 0px;
+            }
+        }
+
+        .post {
+            background: #00c853;
+            padding: 40px;
+            margin-bottom: 10px;
+            animation-name: hide;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+            animation-play-state: paused;
+        }
+
+        .hide {
+            float: right;
+        }
+    </style>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const h1 = document.querySelector('h1');
+            h1.style.animationPlayState = 'paused';
+
+            document.querySelector('button').onclick = () => {
+                d
+                if (h1.style.animationPlayState === 'paused')
+                {
+                    h1.style.animationPlayState = 'running';
+                } else
+                {
+                    h1.style.animationPlayState = 'paused';
+                }
+            }
+        });
+
+
+    </script>
+</head>
+
+<body>
+    <button>Click Here</button>
+    <h1>Welcom!</h1>
+</body>
+
+</html>
